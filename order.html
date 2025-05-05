@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>Order - Samura Kitchen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-gray: #2A2A2A;
+            --gold: #D4AF37;
+            --black: #000000;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('knife.webp');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .section {
+            padding: 20px 0;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 1.2rem;
+            border: 2px solid var(--gold);
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            select {
+                font-size: 0.9rem;
+                padding: 8px 5px;
+                width: 100%;
+                white-space: normal;
+                text-overflow: ellipsis;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Menu</a>
+        <a href="about.html">About Us</a>
+    </nav>
+
+    <header class="header">
+        <div class="container">
+            <h1>Place Your Order</h1>
+        </div>
+    </header>
+
+    <section class="section" id="order-form">
+        <div class="container">
+            <form id="sushiOrderForm" action="https://formspree.io/f/mrbqqlyo" method="POST" style="max-width: 800px; margin: 0 auto; background: rgba(0, 0, 0, 0.3); padding: 30px; border: 1px solid var(--gold);">
+                <div style="margin-bottom: 20px;">
+                    <label for="name" style="display: block; margin-bottom: 8px; color: var(--gold);">Name:</label>
+                    <input type="text" id="name" name="name" required style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label for="phone" style="display: block; margin-bottom: 8px; color: var(--gold);">WhatsApp Number:</label>
+                    <input type="tel" id="phone" name="phone" required style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label for="address" style="display: block; margin-bottom: 8px; color: var(--gold);">Delivery Address:</label>
+                    <input type="text" id="address" name="address" required style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;" placeholder="Room number, Street, City">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; color: var(--gold);">Your Order:</label>
+                    <div style="background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 4px;">
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="color: var(--gold); margin-bottom: 10px;">HOSOMAKI - 8€</h4>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="number" id="hosomaki" min="0" value="0" style="width: 60px; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                <select id="hosomaki-ingredient" name="hosomaki-ingredient" style="flex: 1; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                    <option value="">Choose one: Salmon, Tuna, Shrimp, or Chicken</option>
+                                    <option value="salmon">Salmon</option>
+                                    <option value="tuna">Tuna</option>
+                                    <option value="shrimp">Shrimp</option>
+                                    <option value="chicken">Crispy Chicken</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="color: var(--gold); margin-bottom: 10px;">FUTOMAKI - 9€</h4>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="number" id="futomaki" min="0" value="0" style="width: 60px; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                <select id="futomaki-combo" name="futomaki-combo" style="flex: 1; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                    <option value="">Select your combination</option>
+                                    <option value="salmon-avocado">Salmon + Avocado</option>
+                                    <option value="tuna-cucumber">Tuna + Cucumber</option>
+                                    <option value="chicken-philadelphia">Chicken + Philadelphia</option>
+                                    <option value="shrimp-avocado">Shrimp + Avocado</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="color: var(--gold); margin-bottom: 10px;">URAMAKI - 10€</h4>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="number" id="uramaki" min="0" value="0" style="width: 60px; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                <select id="uramaki-combo" name="uramaki-combo" style="flex: 1; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                    <option value="">Select your combination</option>
+                                    <option value="salmon-avocado-philadelphia">Salmon + Avocado + Philadelphia</option>
+                                    <option value="tuna-cucumber-chive">Tuna + Cucumber + Chive</option>
+                                    <option value="chicken-avocado-philadelphia">Chicken + Avocado + Philadelphia</option>
+                                    <option value="shrimp-cucumber-chive">Shrimp + Cucumber + Chive</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="color: var(--gold); margin-bottom: 10px;">PREMIUM HOSOMAKI - 14€</h4>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="number" id="premium-hosomaki" min="0" value="0" style="width: 60px; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                <div style="flex: 1; padding: 5px; color: var(--white);">Salmon cured in salt & sugar with lime zest</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="color: var(--gold); margin-bottom: 10px;">PREMIUM FUTOMAKI - 14€</h4>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="number" id="premium-futomaki" min="0" value="0" style="width: 60px; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                <div style="flex: 1; padding: 5px; color: var(--white);">Crispy Chicken with avocado, philadelphia, Japanese mayo and crispy onion</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 style="color: var(--gold); margin-bottom: 10px;">PREMIUM URAMAKI - 14€</h4>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="number" id="premium-uramaki" min="0" value="0" style="width: 60px; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                <div style="flex: 1; padding: 5px; color: var(--white);">Duck with chives, honey and sesame seeds</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label for="notes" style="display: block; margin-bottom: 8px; color: var(--gold);">Notes:</label>
+                    <input type="text" id="notes" style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;" placeholder="Any special requests?">
+                </div>
+                
+                <div id="formStatus" style="margin-bottom: 20px; text-align: center; display: none;"></div>
+                <button type="submit" id="submitButton" style="background: var(--gold); color: var(--black); padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; width: 100%;">Place Order</button>
+            </form>
+        </div>
+    </section>
+    
+    <script>
+    const form = document.getElementById('sushiOrderForm');
+    const formStatus = document.getElementById('formStatus');
+    const submitButton = document.getElementById('submitButton');
+
+    function calculateTotal(hosomaki, futomaki, uramaki, premiumHosomaki, premiumFutomaki, premiumUramaki) {
+        return (hosomaki * 8) + (futomaki * 9) + (uramaki * 10) + (premiumHosomaki * 14) + (premiumFutomaki * 14) + (premiumUramaki * 14);
+    }
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+        const notes = document.getElementById('notes').value;
+        
+        const hosomakiCount = document.getElementById('hosomaki').value;
+        const hosomakiIngredient = document.getElementById('hosomaki-ingredient').value;
+        
+        const futomakiCount = document.getElementById('futomaki').value;
+        const futomakiCombo = document.getElementById('futomaki-combo').value;
+        
+        const uramakiCount = document.getElementById('uramaki').value;
+        const uramakiCombo = document.getElementById('uramaki-combo').value;
+
+        const premiumHosomakiCount = document.getElementById('premium-hosomaki').value;
+        const premiumFutomakiCount = document.getElementById('premium-futomaki').value;
+        const premiumUramakiCount = document.getElementById('premium-uramaki').value;
+
+        const total = calculateTotal(hosomakiCount, futomakiCount, uramakiCount, premiumHosomakiCount, premiumFutomakiCount, premiumUramakiCount);
+        
+        const orderDetails = `
+            New Order from ${name}
+            
+            Contact Information:
+            WhatsApp: ${phone}
+            Delivery Address: ${address}
+            
+            Order Details:
+            ${hosomakiCount > 0 ? `- Hosomaki (${hosomakiCount}x): ${hosomakiIngredient}` : ''}
+            ${futomakiCount > 0 ? `- Futomaki (${futomakiCount}x): ${futomakiCombo}` : ''}
+            ${uramakiCount > 0 ? `- Uramaki (${uramakiCount}x): ${uramakiCombo}` : ''}
+            ${premiumHosomakiCount > 0 ? `- Premium Hosomaki (${premiumHosomakiCount}x): Salmon cured in salt & sugar with lime zest` : ''}
+            ${premiumFutomakiCount > 0 ? `- Premium Futomaki (${premiumFutomakiCount}x): Crispy Chicken with avocado, philadelphia, Japanese mayo and crispy onion` : ''}
+            ${premiumUramakiCount > 0 ? `- Premium Uramaki (${premiumUramakiCount}x): Duck with chives, honey and sesame seeds` : ''}
+            
+            Notes:
+            ${notes}
+            
+            Total Amount: €${total}
+        `;
+
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('phone', phone);
+        formData.append('address', address);
+        formData.append('notes', notes);
+        formData.append('orderDetails', orderDetails);
+        formData.append('total', total);
+
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.7';
+        submitButton.textContent = 'Sending...';
+        formStatus.style.display = 'block';
+        formStatus.innerHTML = '<div style="color: var(--gold);">Sending your order...</div>';
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                formStatus.innerHTML = '<div style="color: #4CAF50;">Order sent successfully! We will contact you shortly.</div>';
+                form.reset();
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            formStatus.innerHTML = '<div style="color: #f44336;">Oops! There was a problem sending your order. Please try again.</div>';
+        } finally {
+            submitButton.disabled = false;
+            submitButton.style.opacity = '1';
+            submitButton.textContent = 'Place Order';
+        }
+    });
+    </script>
+</body>
+</html>
