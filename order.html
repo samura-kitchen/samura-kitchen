@@ -101,6 +101,72 @@
                 text-overflow: ellipsis;
             }
         }
+
+        /* Add styles for select options */
+        select option {
+            background-color: var(--dark-gray);
+            color: var(--white);
+        }
+
+        .ingredient-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .ingredient-button {
+            position: relative;
+            padding: 6px 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .ingredient-button input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .ingredient-button span {
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+
+        .ingredient-button input[type="checkbox"]:checked + span {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .ingredient-button input[type="checkbox"]:checked + span::before {
+            content: '✓ ';
+        }
+
+        .ingredient-button.checked {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            .ingredient-grid {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+                gap: 6px;
+            }
+
+            .ingredient-button {
+                padding: 5px 6px;
+            }
+
+            .ingredient-button span {
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -115,6 +181,8 @@
         </div>
     </header>
 
+    <!--PUT YOUR SCRIPT HERE  -->
+    
     <section class="section" id="order-form">
         <div class="container">
             <form id="sushiOrderForm" action="https://formspree.io/f/mrbqqlyo" method="POST" style="max-width: 800px; margin: 0 auto; background: rgba(0, 0, 0, 0.3); padding: 30px; border: 1px solid var(--gold);">
@@ -129,8 +197,8 @@
                 </div>
                 
                 <div style="margin-bottom: 20px;">
-                    <label for="address" style="display: block; margin-bottom: 8px; color: var(--gold);">Delivery Address:</label>
-                    <input type="text" id="address" name="address" required style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;" placeholder="Room number, Street, City">
+                    <label for="address" style="display: block; margin-bottom: 8px; color: var(--gold);">Room number:</label>
+                    <input type="text" id="address" name="address" required style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;" placeholder="Room number at Nido">
                 </div>
                 
                 <div style="margin-bottom: 20px;">
@@ -152,29 +220,89 @@
                         
                         <div style="margin-bottom: 15px;">
                             <h4 style="color: var(--gold); margin-bottom: 10px;">FUTOMAKI - 9€</h4>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <input type="number" id="futomaki" min="0" value="0" style="width: 60px; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
-                                <select id="futomaki-combo" name="futomaki-combo" style="flex: 1; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
-                                    <option value="">Select your combination</option>
-                                    <option value="salmon-avocado">Salmon + Avocado</option>
-                                    <option value="tuna-cucumber">Tuna + Cucumber</option>
-                                    <option value="chicken-philadelphia">Chicken + Philadelphia</option>
-                                    <option value="shrimp-avocado">Shrimp + Avocado</option>
-                                </select>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; align-items: start; gap: 10px;">
+                                    <input type="number" id="futomaki" min="0" value="0" style="width: 50px; padding: 4px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                    <div style="flex: 1;">
+                                        <p style="color: var(--gold); margin-bottom: 4px; font-size: 0.9rem;">Choose up to 2 ingredients:</p>
+                                        <div class="ingredient-grid">
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="futomaki-ingredients" value="Salmon" class="futomaki-ingredient">
+                                                <span>Salmon</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="futomaki-ingredients" value="Tuna" class="futomaki-ingredient">
+                                                <span>Tuna</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="futomaki-ingredients" value="Chicken" class="futomaki-ingredient">
+                                                <span>Chicken</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="futomaki-ingredients" value="Shrimp" class="futomaki-ingredient">
+                                                <span>Shrimp</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="futomaki-ingredients" value="Avocado" class="futomaki-ingredient">
+                                                <span>Avocado</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="futomaki-ingredients" value="Cucumber" class="futomaki-ingredient">
+                                                <span>Cucumber</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="futomaki-ingredients" value="Philadelphia" class="futomaki-ingredient">
+                                                <span>Philadelphia</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
                         <div style="margin-bottom: 15px;">
                             <h4 style="color: var(--gold); margin-bottom: 10px;">URAMAKI - 10€</h4>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <input type="number" id="uramaki" min="0" value="0" style="width: 60px; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
-                                <select id="uramaki-combo" name="uramaki-combo" style="flex: 1; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
-                                    <option value="">Select your combination</option>
-                                    <option value="salmon-avocado-philadelphia">Salmon + Avocado + Philadelphia</option>
-                                    <option value="tuna-cucumber-chive">Tuna + Cucumber + Chive</option>
-                                    <option value="chicken-avocado-philadelphia">Chicken + Avocado + Philadelphia</option>
-                                    <option value="shrimp-cucumber-chive">Shrimp + Cucumber + Chive</option>
-                                </select>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; align-items: start; gap: 10px;">
+                                    <input type="number" id="uramaki" min="0" value="0" style="width: 50px; padding: 4px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                                    <div style="flex: 1;">
+                                        <p style="color: var(--gold); margin-bottom: 4px; font-size: 0.9rem;">Choose up to 3 ingredients:</p>
+                                        <div class="ingredient-grid">
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="uramaki-ingredients" value="Salmon" class="uramaki-ingredient">
+                                                <span>Salmon</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="uramaki-ingredients" value="Tuna" class="uramaki-ingredient">
+                                                <span>Tuna</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="uramaki-ingredients" value="Chicken" class="uramaki-ingredient">
+                                                <span>Chicken</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="uramaki-ingredients" value="Shrimp" class="uramaki-ingredient">
+                                                <span>Shrimp</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="uramaki-ingredients" value="Avocado" class="uramaki-ingredient">
+                                                <span>Avocado</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="uramaki-ingredients" value="Cucumber" class="uramaki-ingredient">
+                                                <span>Cucumber</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="uramaki-ingredients" value="Philadelphia" class="uramaki-ingredient">
+                                                <span>Philadelphia</span>
+                                            </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="uramaki-ingredients" value="Chive" class="uramaki-ingredient">
+                                                <span>Chive</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -209,8 +337,30 @@
                     <input type="text" id="notes" style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;" placeholder="Any special requests?">
                 </div>
                 
+                <!-- New payment section -->
+                <div id="paymentSection" style="display: none; margin-top: 20px; text-align: center;">
+                    <div style="background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 4px; margin-bottom: 20px;">
+                        <h3 style="color: var(--gold); margin-bottom: 15px;">Order Summary</h3>
+                        <p id="orderTotal" style="font-size: 1.2rem; margin-bottom: 15px;"></p>
+                        <p style="margin-bottom: 15px;">Your Order ID: <span id="orderId" style="color: var(--gold); font-weight: bold;"></span></p>
+                        <div id="orderDetails" style="text-align: left; margin-bottom: 15px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 4px;"></div>
+                        <p style="margin-bottom: 15px;">Please follow these steps:</p>
+                        <ol style="text-align: left; margin-left: 20px; margin-bottom: 15px;">
+                            <li>Click the "Buy me a coffee" button in the bottom right</li>
+                            <li>Enter your Order ID in the message field</li>
+                            <li>Complete the payment</li>
+                            <li>Return here and click "I Confirm Payment"</li>
+                        </ol>
+                    </div>
+                    <div id="paymentButtons" style="display: flex; gap: 10px; justify-content: center;">
+                        <button type="button" id="confirmPaymentBtn" style="background: var(--gold); color: var(--black); padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer;">I Confirm Payment</button>
+                        <button type="button" id="cancelPaymentBtn" style="background: transparent; color: var(--gold); padding: 15px 30px; border: 1px solid var(--gold); border-radius: 5px; font-size: 1.1rem; cursor: pointer;">Cancel</button>
+                    </div>
+                </div>
+                
                 <div id="formStatus" style="margin-bottom: 20px; text-align: center; display: none;"></div>
-                <button type="submit" id="submitButton" style="background: var(--gold); color: var(--black); padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; width: 100%;">Place Order</button>
+                <button type="button" id="proceedToPaymentBtn" style="background: var(--gold); color: var(--black); padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; width: 100%;">Proceed to Payment</button>
+                <button type="submit" id="submitButton" style="display: none; background: var(--gold); color: var(--black); padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; width: 100%;">Place Order</button>
             </form>
         </div>
     </section>
@@ -219,10 +369,146 @@
     const form = document.getElementById('sushiOrderForm');
     const formStatus = document.getElementById('formStatus');
     const submitButton = document.getElementById('submitButton');
+    const proceedToPaymentBtn = document.getElementById('proceedToPaymentBtn');
+    const paymentSection = document.getElementById('paymentSection');
+    const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
+    const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
+    const orderIdElement = document.getElementById('orderId');
+    const orderTotalElement = document.getElementById('orderTotal');
 
     function calculateTotal(hosomaki, futomaki, uramaki, premiumHosomaki, premiumFutomaki, premiumUramaki) {
         return (hosomaki * 8) + (futomaki * 9) + (uramaki * 10) + (premiumHosomaki * 14) + (premiumFutomaki * 14) + (premiumUramaki * 14);
     }
+
+    function generateOrderId() {
+        return 'SK-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    }
+
+    function getSelectedIngredients(className) {
+        const checked = document.querySelectorAll(`.${className}:checked`);
+        return Array.from(checked).map(cb => cb.value).join(' + ');
+    }
+
+    function generateOrderDetails() {
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+        const notes = document.getElementById('notes').value;
+        
+        const hosomakiCount = parseInt(document.getElementById('hosomaki').value) || 0;
+        const hosomakiIngredient = document.getElementById('hosomaki-ingredient').value;
+        
+        const futomakiCount = parseInt(document.getElementById('futomaki').value) || 0;
+        const futomakiIngredients = getSelectedIngredients('futomaki-ingredient');
+        
+        const uramakiCount = parseInt(document.getElementById('uramaki').value) || 0;
+        const uramakiIngredients = getSelectedIngredients('uramaki-ingredient');
+
+        const premiumHosomakiCount = parseInt(document.getElementById('premium-hosomaki').value) || 0;
+        const premiumFutomakiCount = parseInt(document.getElementById('premium-futomaki').value) || 0;
+        const premiumUramakiCount = parseInt(document.getElementById('premium-uramaki').value) || 0;
+
+        let details = '<h4 style="color: var(--gold); margin-bottom: 10px;">Order Details:</h4>';
+        
+        if (hosomakiCount > 0) {
+            details += `<p>• Hosomaki (${hosomakiCount}x)${hosomakiIngredient ? `: ${hosomakiIngredient}` : ''}</p>`;
+        }
+        if (futomakiCount > 0) {
+            details += `<p>• Futomaki (${futomakiCount}x)${futomakiIngredients ? `: ${futomakiIngredients}` : ''}</p>`;
+        }
+        if (uramakiCount > 0) {
+            details += `<p>• Uramaki (${uramakiCount}x)${uramakiIngredients ? `: ${uramakiIngredients}` : ''}</p>`;
+        }
+        if (premiumHosomakiCount > 0) {
+            details += `<p>• Premium Hosomaki (${premiumHosomakiCount}x): Salmon cured in salt & sugar with lime zest</p>`;
+        }
+        if (premiumFutomakiCount > 0) {
+            details += `<p>• Premium Futomaki (${premiumFutomakiCount}x): Crispy Chicken with avocado, philadelphia, Japanese mayo and crispy onion</p>`;
+        }
+        if (premiumUramakiCount > 0) {
+            details += `<p>• Premium Uramaki (${premiumUramakiCount}x): Duck with chives, honey and sesame seeds</p>`;
+        }
+        
+        if (notes) {
+            details += `<p style="margin-top: 10px;"><strong style="color: var(--gold);">Notes:</strong> ${notes}</p>`;
+        }
+
+        return details;
+    }
+
+    proceedToPaymentBtn.addEventListener('click', function() {
+        // Validate form fields
+        const requiredFields = ['name', 'phone', 'address'];
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            const element = document.getElementById(field);
+            if (!element.value.trim()) {
+                element.style.borderColor = 'red';
+                isValid = false;
+            } else {
+                element.style.borderColor = 'var(--gold)';
+            }
+        });
+
+        if (!isValid) {
+            formStatus.style.display = 'block';
+            formStatus.style.color = 'red';
+            formStatus.textContent = 'Please fill in all required fields';
+            return;
+        }
+
+        // Calculate total and generate order ID
+        const total = calculateTotal(
+            parseInt(document.getElementById('hosomaki').value) || 0,
+            parseInt(document.getElementById('futomaki').value) || 0,
+            parseInt(document.getElementById('uramaki').value) || 0,
+            parseInt(document.getElementById('premium-hosomaki').value) || 0,
+            parseInt(document.getElementById('premium-futomaki').value) || 0,
+            parseInt(document.getElementById('premium-uramaki').value) || 0
+        );
+
+        if (total === 0) {
+            formStatus.style.display = 'block';
+            formStatus.style.color = 'red';
+            formStatus.textContent = 'Please select at least one item';
+            return;
+        }
+
+        const orderId = generateOrderId();
+        orderIdElement.textContent = orderId;
+        orderTotalElement.textContent = `Total Amount: €${total}`;
+        document.getElementById('orderDetails').innerHTML = generateOrderDetails();
+        
+        // Show payment section
+        proceedToPaymentBtn.style.display = 'none';
+        paymentSection.style.display = 'block';
+        formStatus.style.display = 'none';
+
+        // Disable form fields
+        form.querySelectorAll('input, select').forEach(element => {
+            element.disabled = true;
+        });
+    });
+
+    cancelPaymentBtn.addEventListener('click', function() {
+        // Reset payment section
+        proceedToPaymentBtn.style.display = 'block';
+        paymentSection.style.display = 'none';
+        
+        // Enable form fields
+        form.querySelectorAll('input, select').forEach(element => {
+            element.disabled = false;
+        });
+    });
+
+    confirmPaymentBtn.addEventListener('click', function() {
+        submitButton.style.display = 'block';
+        document.getElementById('paymentButtons').style.display = 'none';
+        formStatus.style.display = 'block';
+        formStatus.style.color = 'var(--gold)';
+        formStatus.textContent = 'Payment confirmed! Please click "Place Order" to complete your order.';
+    });
 
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
@@ -231,50 +517,43 @@
         const phone = document.getElementById('phone').value;
         const address = document.getElementById('address').value;
         const notes = document.getElementById('notes').value;
+        const orderId = document.getElementById('orderId').textContent;
         
         const hosomakiCount = document.getElementById('hosomaki').value;
         const hosomakiIngredient = document.getElementById('hosomaki-ingredient').value;
         
         const futomakiCount = document.getElementById('futomaki').value;
-        const futomakiCombo = document.getElementById('futomaki-combo').value;
+        const futomakiIngredients = getSelectedIngredients('futomaki-ingredient');
         
         const uramakiCount = document.getElementById('uramaki').value;
-        const uramakiCombo = document.getElementById('uramaki-combo').value;
+        const uramakiIngredients = getSelectedIngredients('uramaki-ingredient');
 
         const premiumHosomakiCount = document.getElementById('premium-hosomaki').value;
         const premiumFutomakiCount = document.getElementById('premium-futomaki').value;
         const premiumUramakiCount = document.getElementById('premium-uramaki').value;
 
-        const total = calculateTotal(hosomakiCount, futomakiCount, uramakiCount, premiumHosomakiCount, premiumFutomakiCount, premiumUramakiCount);
-        
-        const orderDetails = `
-            New Order from ${name}
-            
-            Contact Information:
-            WhatsApp: ${phone}
-            Delivery Address: ${address}
-            
-            Order Details:
-            ${hosomakiCount > 0 ? `- Hosomaki (${hosomakiCount}x): ${hosomakiIngredient}` : ''}
-            ${futomakiCount > 0 ? `- Futomaki (${futomakiCount}x): ${futomakiCombo}` : ''}
-            ${uramakiCount > 0 ? `- Uramaki (${uramakiCount}x): ${uramakiCombo}` : ''}
-            ${premiumHosomakiCount > 0 ? `- Premium Hosomaki (${premiumHosomakiCount}x): Salmon cured in salt & sugar with lime zest` : ''}
-            ${premiumFutomakiCount > 0 ? `- Premium Futomaki (${premiumFutomakiCount}x): Crispy Chicken with avocado, philadelphia, Japanese mayo and crispy onion` : ''}
-            ${premiumUramakiCount > 0 ? `- Premium Uramaki (${premiumUramakiCount}x): Duck with chives, honey and sesame seeds` : ''}
-            
-            Notes:
-            ${notes}
-            
-            Total Amount: €${total}
-        `;
+        const total = calculateTotal(
+            parseInt(hosomakiCount) || 0,
+            parseInt(futomakiCount) || 0,
+            parseInt(uramakiCount) || 0,
+            parseInt(premiumHosomakiCount) || 0,
+            parseInt(premiumFutomakiCount) || 0,
+            parseInt(premiumUramakiCount) || 0
+        );
+
+        const orderDetails = `Order ID: ${orderId}
+
+Contact Information:
+Name: ${name}
+WhatsApp: ${phone}
+Room number: ${address}
+
+Order Details:${parseInt(hosomakiCount) > 0 ? `\n• Hosomaki (${hosomakiCount}x)${hosomakiIngredient ? `: ${hosomakiIngredient}` : ''}` : ''}${parseInt(futomakiCount) > 0 ? `\n• Futomaki (${futomakiCount}x)${futomakiIngredients ? `: ${futomakiIngredients}` : ''}` : ''}${parseInt(uramakiCount) > 0 ? `\n• Uramaki (${uramakiCount}x)${uramakiIngredients ? `: ${uramakiIngredients}` : ''}` : ''}${parseInt(premiumHosomakiCount) > 0 ? `\n• Premium Hosomaki (${premiumHosomakiCount}x): Salmon cured in salt & sugar with lime zest` : ''}${parseInt(premiumFutomakiCount) > 0 ? `\n• Premium Futomaki (${premiumFutomakiCount}x): Crispy Chicken with avocado, philadelphia, Japanese mayo and crispy onion` : ''}${parseInt(premiumUramakiCount) > 0 ? `\n• Premium Uramaki (${premiumUramakiCount}x): Duck with chives, honey and sesame seeds` : ''}
+
+${notes ? `Notes:\n${notes}\n` : ''}Total Amount: €${total}`;
 
         const formData = new FormData();
-        formData.append('name', name);
-        formData.append('phone', phone);
-        formData.append('address', address);
-        formData.append('notes', notes);
         formData.append('orderDetails', orderDetails);
-        formData.append('total', total);
 
         submitButton.disabled = true;
         submitButton.style.opacity = '0.7';
@@ -304,6 +583,40 @@
             submitButton.style.opacity = '1';
             submitButton.textContent = 'Place Order';
         }
+    });
+
+    // Add checked class to ingredient buttons
+    document.querySelectorAll('.ingredient-button').forEach(button => {
+        const checkbox = button.querySelector('input[type="checkbox"]');
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                button.classList.add('checked');
+            } else {
+                button.classList.remove('checked');
+            }
+        });
+    });
+
+    // Update futomaki validation
+    document.querySelectorAll('.futomaki-ingredient').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const checked = document.querySelectorAll('.futomaki-ingredient:checked');
+            if (checked.length > 2) {
+                this.checked = false;
+                this.closest('.ingredient-button').classList.remove('checked');
+            }
+        });
+    });
+
+    // Update uramaki validation
+    document.querySelectorAll('.uramaki-ingredient').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const checked = document.querySelectorAll('.uramaki-ingredient:checked');
+            if (checked.length > 3) {
+                this.checked = false;
+                this.closest('.ingredient-button').classList.remove('checked');
+            }
+        });
     });
     </script>
 </body>
