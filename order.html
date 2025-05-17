@@ -311,7 +311,7 @@
                             <h4 style="color: var(--gold); margin-bottom: 10px;">PREMIUM HOSOMAKI - 14€</h4>
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <input type="number" id="premium-hosomaki" min="0" value="0" style="width: 60px; padding: 5px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
-                                <div style="flex: 1; padding: 5px; color: var(--white);">Salmon cured in salt & sugar with lime zest</div>
+                                <div style="flex: 1; padding: 5px; color: var(--white);">Tuna mixed with a few drops of sesame oil, a touch of spicy mayo</div>
                             </div>
                         </div>
 
@@ -549,7 +549,7 @@ Name: ${name}
 WhatsApp: ${phone}
 Room number: ${address}
 
-Order Details:${parseInt(hosomakiCount) > 0 ? `\n• Hosomaki (${hosomakiCount}x)${hosomakiIngredient ? `: ${hosomakiIngredient}` : ''}` : ''}${parseInt(futomakiCount) > 0 ? `\n• Futomaki (${futomakiCount}x)${futomakiIngredients ? `: ${futomakiIngredients}` : ''}` : ''}${parseInt(uramakiCount) > 0 ? `\n• Uramaki (${uramakiCount}x)${uramakiIngredients ? `: ${uramakiIngredients}` : ''}` : ''}${parseInt(premiumHosomakiCount) > 0 ? `\n• Premium Hosomaki (${premiumHosomakiCount}x): Salmon cured in salt & sugar with lime zest` : ''}${parseInt(premiumFutomakiCount) > 0 ? `\n• Premium Futomaki (${premiumFutomakiCount}x): Crispy Chicken with avocado, philadelphia, Japanese mayo and crispy onion` : ''}${parseInt(premiumUramakiCount) > 0 ? `\n• Premium Uramaki (${premiumUramakiCount}x): Duck with chives, honey and sesame seeds` : ''}
+Order Details:${parseInt(hosomakiCount) > 0 ? `\n• Hosomaki (${hosomakiCount}x)${hosomakiIngredient ? `: ${hosomakiIngredient}` : ''}` : ''}${parseInt(futomakiCount) > 0 ? `\n• Futomaki (${futomakiCount}x)${futomakiIngredients ? `: ${futomakiIngredients}` : ''}` : ''}${parseInt(uramakiCount) > 0 ? `\n• Uramaki (${uramakiCount}x)${uramakiIngredients ? `: ${uramakiIngredients}` : ''}` : ''}${parseInt(premiumHosomakiCount) > 0 ? `\n• Premium Hosomaki (${premiumHosomakiCount}x): Tuna mixed with a few drops of sesame oil, a touch of spicy mayo` : ''}${parseInt(premiumFutomakiCount) > 0 ? `\n• Premium Futomaki (${premiumFutomakiCount}x): Crispy Chicken with avocado, philadelphia, Japanese mayo and crispy onion` : ''}${parseInt(premiumUramakiCount) > 0 ? `\n• Premium Uramaki (${premiumUramakiCount}x): Duck with chives, honey and sesame seeds` : ''}
 
 ${notes ? `Notes:\n${notes}\n` : ''}Total Amount: €${total}`;
 
