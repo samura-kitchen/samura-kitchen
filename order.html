@@ -201,6 +201,16 @@
                     <label for="address" style="display: block; margin-bottom: 8px; color: var(--gold);">Room number:</label>
                     <input type="text" id="address" name="address" required style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;" placeholder="Room number at Nido">
                 </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label for="orderDate" style="display: block; margin-bottom: 8px; color: var(--gold);">Preferred Delivery Date:</label>
+                    <input type="date" id="orderDate" name="orderDate" required style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label for="orderTime" style="display: block; margin-bottom: 8px; color: var(--gold);">Preferred Delivery Time:</label>
+                    <input type="time" id="orderTime" name="orderTime" required style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;">
+                </div>
                 
                 <div style="margin-bottom: 20px;">
                     <label style="display: block; margin-bottom: 8px; color: var(--gold);">Your Order:</label>
@@ -255,6 +265,11 @@
                                                 <input type="checkbox" name="futomaki-ingredients" value="Philadelphia" class="futomaki-ingredient">
                                                 <span>Philadelphia</span>
                                             </label>
+                                            <label class="ingredient-button">
+                                                <input type="checkbox" name="futomaki-ingredients" value="Chive" class="futomaki-ingredient">
+                                                <span>Chive</span>
+                                            </label>
+
                                         </div>
                                     </div>
                                 </div>
@@ -337,6 +352,22 @@
                     <label for="notes" style="display: block; margin-bottom: 8px; color: var(--gold);">Notes:</label>
                     <input type="text" id="notes" style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--gold); color: var(--white); border-radius: 4px;" placeholder="Any special requests?">
                 </div>
+
+                <!-- Payment Method Selection -->
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; color: var(--gold);">Payment Method:</label>
+                    <div style="background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 4px;">
+                        <label style="display: block; margin-bottom: 10px;">
+                            <input type="radio" name="paymentMethod" value="iban" checked style="margin-right: 5px;"> IBAN Transfer (NL94INGB0107494698)
+                        </label>
+                        <label style="display: block; margin-bottom: 10px;">
+                            <input type="radio" name="paymentMethod" value="cash" style="margin-right: 5px;"> Cash on Delivery
+                        </label>
+                        <label style="display: block;">
+                            <input type="radio" name="paymentMethod" value="buymeacoffee" style="margin-right: 5px;"> BuyMeACoffee
+                        </label>
+                    </div>
+                </div>
                 
                 <!-- New payment section -->
                 <div id="paymentSection" style="display: none; margin-top: 20px; text-align: center;">
@@ -346,11 +377,8 @@
                         <p style="margin-bottom: 15px;">Your Order ID: <span id="orderId" style="color: var(--gold); font-weight: bold;"></span></p>
                         <div id="orderDetails" style="text-align: left; margin-bottom: 15px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 4px;"></div>
                         <p style="margin-bottom: 15px;">Please follow these steps:</p>
-                        <ol style="text-align: left; margin-left: 20px; margin-bottom: 15px;">
-                            <li>Click the "Buy me a coffee" button in the bottom right</li>
-                            <li>Enter your Order ID in the message field</li>
-                            <li>Complete the payment</li>
-                            <li>Return here and click "I Confirm Payment"</li>
+                        <ol id="paymentInstructions" style="text-align: left; margin-left: 20px; margin-bottom: 15px;">
+                            {/* Payment instructions will be dynamically inserted here by JavaScript */}
                         </ol>
                     </div>
                     <div id="paymentButtons" style="display: flex; gap: 10px; justify-content: center;">
@@ -376,6 +404,7 @@
     const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
     const orderIdElement = document.getElementById('orderId');
     const orderTotalElement = document.getElementById('orderTotal');
+    const paymentInstructionsElement = document.getElementById('paymentInstructions');
 
     function calculateTotal(hosomaki, futomaki, uramaki, premiumHosomaki, premiumFutomaki, premiumUramaki) {
         return (hosomaki * 8) + (futomaki * 9) + (uramaki * 10) + (premiumHosomaki * 14) + (premiumFutomaki * 14) + (premiumUramaki * 14);
@@ -394,7 +423,10 @@
         const name = document.getElementById('name').value;
         const phone = document.getElementById('phone').value;
         const address = document.getElementById('address').value;
+        const orderDate = document.getElementById('orderDate').value;
+        const orderTime = document.getElementById('orderTime').value;
         const notes = document.getElementById('notes').value;
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
         
         const hosomakiCount = parseInt(document.getElementById('hosomaki').value) || 0;
         const hosomakiIngredient = document.getElementById('hosomaki-ingredient').value;
@@ -430,6 +462,9 @@
             details += `<p>• Premium Uramaki (${premiumUramakiCount}x): Duck with chives, honey and sesame seeds</p>`;
         }
         
+        details += `<p style="margin-top:10px;"><strong style="color: var(--gold);">Preferred Delivery:</strong> ${orderDate} at ${orderTime}</p>`;
+        details += `<p style="margin-top:10px;"><strong style="color: var(--gold);">Payment Method:</strong> ${paymentMethod.charAt(0).toUpperCase() + paymentMethod.slice(1)}</p>`;
+
         if (notes) {
             details += `<p style="margin-top: 10px;"><strong style="color: var(--gold);">Notes:</strong> ${notes}</p>`;
         }
@@ -439,7 +474,7 @@
 
     proceedToPaymentBtn.addEventListener('click', function() {
         // Validate form fields
-        const requiredFields = ['name', 'phone', 'address'];
+        const requiredFields = ['name', 'phone', 'address', 'orderDate', 'orderTime'];
         let isValid = true;
         
         requiredFields.forEach(field => {
@@ -481,6 +516,31 @@
         orderTotalElement.textContent = `Total Amount: €${total}`;
         document.getElementById('orderDetails').innerHTML = generateOrderDetails();
         
+        // Update payment instructions based on selected method
+        const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+        paymentInstructionsElement.innerHTML = ''; // Clear previous instructions
+
+        if (selectedPaymentMethod === 'iban') {
+            paymentInstructionsElement.innerHTML = `
+                <li>Transfer the total amount to IBAN: NL94INGB0107494698.</li>
+                <li>Include your Order ID in the payment reference.</li>
+                <li>Return here and click "I Confirm Payment".</li>
+            `;
+        } else if (selectedPaymentMethod === 'cash') {
+            paymentInstructionsElement.innerHTML = `
+                <li>Have the exact amount ready for cash payment upon delivery.</li>
+                <li>Our delivery person will confirm the payment.</li>
+                <li>Click "I Confirm Payment" once you have the cash ready.</li>
+            `;
+        } else if (selectedPaymentMethod === 'buymeacoffee') {
+            paymentInstructionsElement.innerHTML = `
+                <li>Click the "Buy me a coffee" button in the bottom right.</li>
+                <li>Enter your Order ID in the message field.</li>
+                <li>Complete the payment.</li>
+                <li>Return here and click "I Confirm Payment".</li>
+            `;
+        }
+
         // Show payment section
         proceedToPaymentBtn.style.display = 'none';
         paymentSection.style.display = 'block';
@@ -517,8 +577,11 @@
         const name = document.getElementById('name').value;
         const phone = document.getElementById('phone').value;
         const address = document.getElementById('address').value;
+        const orderDate = document.getElementById('orderDate').value;
+        const orderTime = document.getElementById('orderTime').value;
         const notes = document.getElementById('notes').value;
         const orderId = document.getElementById('orderId').textContent;
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
         
         const hosomakiCount = document.getElementById('hosomaki').value;
         const hosomakiIngredient = document.getElementById('hosomaki-ingredient').value;
@@ -541,17 +604,10 @@
             parseInt(premiumFutomakiCount) || 0,
             parseInt(premiumUramakiCount) || 0
         );
+        const paymentMethodString = `Payment Method: ${paymentMethod.charAt(0).toUpperCase() + paymentMethod.slice(1)}`;
+        const deliveryDateTimeString = `Preferred Delivery: ${orderDate} at ${orderTime}`;
 
-        const orderDetails = `Order ID: ${orderId}
-
-Contact Information:
-Name: ${name}
-WhatsApp: ${phone}
-Room number: ${address}
-
-Order Details:${parseInt(hosomakiCount) > 0 ? `\n• Hosomaki (${hosomakiCount}x)${hosomakiIngredient ? `: ${hosomakiIngredient}` : ''}` : ''}${parseInt(futomakiCount) > 0 ? `\n• Futomaki (${futomakiCount}x)${futomakiIngredients ? `: ${futomakiIngredients}` : ''}` : ''}${parseInt(uramakiCount) > 0 ? `\n• Uramaki (${uramakiCount}x)${uramakiIngredients ? `: ${uramakiIngredients}` : ''}` : ''}${parseInt(premiumHosomakiCount) > 0 ? `\n• Premium Hosomaki (${premiumHosomakiCount}x): Tuna mixed with a few drops of sesame oil, a touch of spicy mayo` : ''}${parseInt(premiumFutomakiCount) > 0 ? `\n• Premium Futomaki (${premiumFutomakiCount}x): Crispy Chicken with avocado, philadelphia, Japanese mayo and crispy onion` : ''}${parseInt(premiumUramakiCount) > 0 ? `\n• Premium Uramaki (${premiumUramakiCount}x): Duck with chives, honey and sesame seeds` : ''}
-
-${notes ? `Notes:\n${notes}\n` : ''}Total Amount: €${total}`;
+        const orderDetails = `Order ID: ${orderId}\n\nContact Information:\nName: ${name}\nWhatsApp: ${phone}\nRoom number: ${address}\n\n${deliveryDateTimeString}\n\nOrder Details:${parseInt(hosomakiCount) > 0 ? `\n• Hosomaki (${hosomakiCount}x)${hosomakiIngredient ? `: ${hosomakiIngredient}` : ''}` : ''}${parseInt(futomakiCount) > 0 ? `\n• Futomaki (${futomakiCount}x)${futomakiIngredients ? `: ${futomakiIngredients}` : ''}` : ''}${parseInt(uramakiCount) > 0 ? `\n• Uramaki (${uramakiCount}x)${uramakiIngredients ? `: ${uramakiIngredients}` : ''}` : ''}${parseInt(premiumHosomakiCount) > 0 ? `\n• Premium Hosomaki (${premiumHosomakiCount}x): Tuna mixed with a few drops of sesame oil, a touch of spicy mayo` : ''}${parseInt(premiumFutomakiCount) > 0 ? `\n• Premium Futomaki (${premiumFutomakiCount}x): Crispy Chicken with avocado, philadelphia, Japanese mayo and crispy onion` : ''}${parseInt(premiumUramakiCount) > 0 ? `\n• Premium Uramaki (${premiumUramakiCount}x): Duck with chives, honey and sesame seeds` : ''}\n\n${paymentMethodString}\n\n${notes ? `Notes:\n${notes}\n` : ''}Total Amount: €${total}`;
 
         const formData = new FormData();
         formData.append('orderDetails', orderDetails);
